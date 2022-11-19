@@ -1,0 +1,165 @@
+/* base style */
+main{
+    /* flex-grow: 1; */
+    max-width: 1920px;
+    width: 100%;
+    flex: 1;
+    margin: auto;
+    overflow: hidden;
+}
+
+.main-block {
+    width: 300%;
+    height: 100%;
+    display: flex;
+    transition: all ease-in 0.3s;
+}
+.page-1,
+.page-2,
+.page-3{
+  width: calc(100%/3);
+  height: 100%;
+}
+
+.page-1{
+  background-color: black ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.sound-btn{
+  position: absolute;
+  top: 7%;
+  left: 4%;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  background: center no-repeat;
+  cursor: pointer;
+  transition: background-image ease-in 0.3s;
+}
+.sound-btn_active{
+  background-image: url(../assets/svg/sound-yes.svg);
+}
+
+.sound-btn_stop{
+  background-image: url(../assets/svg/sounds-no.svg);
+}
+.page-1 video{
+  flex: 1;
+}
+
+.page-1 h1{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.page-2{
+  background-color: grey;
+}
+.page-3{
+    background-color: aqua;
+}
+
+.view-2{
+    margin-left: -100%;
+}
+
+.view-3{
+    margin-left: -200%;
+}
+
+/* page-2 style */
+.page-2{
+  padding: 10px;
+  display: grid;
+  grid-template-rows: 0.5fr 3fr 5fr 1fr;
+  row-gap: 4%;
+
+}
+
+.page-2_nav{
+  margin-top: 1%;
+  padding: 1%;
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+  gap: 10px;
+}
+
+.page-2_nav li{
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  list-style: none;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: rgb(60, 55, 78);
+}
+
+.task-block{
+  padding: 1%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.foto-bird{
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+  /* align-self: center;
+  justify-self: center; */
+  background-image: url(../assets/svg/logo.svg);
+  background-size: auto;
+}
+
+.name-bird{
+  grid-column: 2 / 5;
+  grid-row: 1 / 2;
+  align-self: center;
+  justify-self: self-start;
+}
+
+.audio{
+  grid-column: 2 / 5;
+  grid-row: 2 / 4;
+  align-self: center;
+  justify-self: center;
+}
+
+.block-answer-describe{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.answer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: flex-start;
+  padding-left: 5%;
+
+}
+
+.describe-bird{
+  display: grid;
+}
+
+.main-btn{
+  width: 70%;
+  height: 36px;
+  line-height: 36px;
+  justify-self: center;
+  align-self: center;
+  border: 1px solid white;
+  text-align: center;
+  border-radius: 8px;
+  background-color: rgb(101, 97, 92);
+  cursor: pointer;
+}
