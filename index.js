@@ -24,6 +24,7 @@ scoreRes.classList.toggle('invisible')
 
 headerBtn.addEventListener('click', ()=>{
     
+    selectName()
     mainScreen.classList.toggle('view-2')
 
     if(mainScreen.classList.contains('view-2')){
@@ -61,7 +62,7 @@ soundBtn.addEventListener('click', ()=>{
     soundBtn.classList.toggle('sound-btn_stop')
     soundBtn.classList.toggle('sound-btn_active')
 
-    
+    toggleScreen()    
 
     if (soundBtn.classList.contains('sound-btn_active')){
         video.muted = false
@@ -94,7 +95,7 @@ taskSelection.addEventListener('click', (event)=>{
             case 'Морские птицы':
                 indexBirdsData = 5
                 break
-            default:
+            default:                
                 return
         }    
         selectName(indexBirdsData)
@@ -105,10 +106,13 @@ taskSelection.addEventListener('click', (event)=>{
 
 // block answer
     // по кнопке в меню, выводим название птиц вблоке задание
-function selectName(index){        
+function selectName(index = 0){        
         birdsData[index].forEach((el, i)=>{
             taskBirdsNames[i].textContent = el.name
-        })        
+        })
+        if(!index){
+            indexBirdsData = 0
+        }
 }
 
 taskBirdsNames.forEach(el =>{
@@ -134,7 +138,12 @@ function descriptionBird(i){
     describeName.textContent = `${birdsData[indexBirdsData][i].name}` + '/' + `${birdsData[indexBirdsData][i].species}`   
     
     const describeImg = document.querySelector('.describe-bird img')
-    describeImg.src = `${birdsData[indexBirdsData][i].image}`
+
+    if(`${birdsData[indexBirdsData][i].name}` === 'Пеликан'){
+        describeImg.src = './assets/img/pelican.jpg'
+    } else {
+        describeImg.src = `${birdsData[indexBirdsData][i].image}`
+    }
 
     const describeText = document.querySelector('.describe-bird p')    
     describeText.textContent = `${birdsData[indexBirdsData][i].description}`
