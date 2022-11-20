@@ -204,3 +204,14 @@ main{
   background-color: #554d4d;
   cursor: pointer;
 }
+/*  для ответов правильно или нет */
+.trueAnswer::marker{
+  color: green;
+}
+
+.falseAnswer::marker{
+  color: red;
+}
+
+/* ----------------------------- */
+
