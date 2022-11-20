@@ -13,7 +13,7 @@ const taskBirdsNamesMarkers = document.querySelectorAll('.answer li')
 const taskSelection = document.querySelector('.page-2_nav')
 
 
-let indexBirdsData, nameBird,
+let indexBirdsData, nameBird, 
 objectAnswer = {
     guess: '',
     answer:''
@@ -29,7 +29,7 @@ score.classList.toggle('invisible')
 scoreRes.classList.toggle('invisible')
 
 headerBtn.addEventListener('click', ()=>{
-
+    
     selectName()
     mainScreen.classList.toggle('view-2')
 
@@ -40,8 +40,8 @@ headerBtn.addEventListener('click', ()=>{
         scoreRes.classList.toggle('invisible')
 
         if (soundBtn.classList.contains('sound-btn_active')){
-
-            video.muted = true
+            
+            video.muted = true            
             soundBtn.classList.toggle('sound-btn_active')
             soundBtn.classList.toggle('sound-btn_stop')
         }
@@ -51,12 +51,12 @@ headerBtn.addEventListener('click', ()=>{
         scoreRes.classList.toggle('invisible')
 
         video.muted = false
-        soundBtn.classList.toggle('sound-btn_stop')
+        soundBtn.classList.toggle('sound-btn_stop')          
         soundBtn.classList.toggle('sound-btn_active')
-
+        
 
     }
-
+    
 })
 
 // main
@@ -68,7 +68,7 @@ soundBtn.addEventListener('click', ()=>{
     soundBtn.classList.toggle('sound-btn_stop')
     soundBtn.classList.toggle('sound-btn_active')
 
-    toggleScreen()
+    toggleScreen()    
 
     if (soundBtn.classList.contains('sound-btn_active')){
         video.muted = false
@@ -80,8 +80,8 @@ soundBtn.addEventListener('click', ()=>{
 // 2.2 write names of birds
 
     // получаем название группы птиц по кнопке
-taskSelection.addEventListener('click', (event)=>{
-
+taskSelection.addEventListener('click', (event)=>{ 
+        
         switch(event.target.textContent){
             case 'Разминка':
                 indexBirdsData = 0
@@ -101,9 +101,9 @@ taskSelection.addEventListener('click', (event)=>{
             case 'Морские птицы':
                 indexBirdsData = 5
                 break
-            default:
+            default:                
                 return
-        }
+        }    
         selectName(indexBirdsData)
         checkMarkerClass()
 })
@@ -113,20 +113,21 @@ taskSelection.addEventListener('click', (event)=>{
 
 // block answer
     // по кнопке в меню, выводим название птиц вблоке задание
-function selectName(index = 0){
+function selectName(index = 0){        
         birdsData[index].forEach((el, i)=>{
             taskBirdsNames[i].textContent = el.name
         })
         if(!index){
             indexBirdsData = 0
         }
+        removeTrueAnswer()
         guessBird(indexBirdsData)
 }
 
 taskBirdsNames.forEach(el =>{
-
+    
     el.addEventListener('click',(event)=>{
-
+        
         nameBird = event.target.textContent
 
         birdsData[indexBirdsData].forEach((el, i) =>{
@@ -135,17 +136,17 @@ taskBirdsNames.forEach(el =>{
                 const index = i
                 descriptionBird(index)
             }
-
+            
         })
-    })
+    })    
 })
 
 // block description
 function descriptionBird(i){
 
     const describeName = document.querySelector('.describe-bird h2')
-    describeName.textContent = `${birdsData[indexBirdsData][i].name}` + '/' + `${birdsData[indexBirdsData][i].species}`
-
+    describeName.textContent = `${birdsData[indexBirdsData][i].name}` + '/' + `${birdsData[indexBirdsData][i].species}`   
+    
     const describeImg = document.querySelector('.describe-bird img')
 
     if(`${birdsData[indexBirdsData][i].name}` === 'Пеликан'){
@@ -154,7 +155,7 @@ function descriptionBird(i){
         describeImg.src = `${birdsData[indexBirdsData][i].image}`
     }
 
-    const describeText = document.querySelector('.describe-bird p')
+    const describeText = document.querySelector('.describe-bird p')    
     describeText.textContent = `${birdsData[indexBirdsData][i].description}`
 
     const describeAudio = document.querySelector('.describe-bird audio')
@@ -162,7 +163,7 @@ function descriptionBird(i){
 
     objectAnswer.answer = `${birdsData[indexBirdsData][i].name}`
 
-    isTrueAnswer()
+    isTrueAnswer(describeName.textContent, describeImg.src)
 }
 
 // fullscreen
@@ -218,28 +219,32 @@ function randomBirds(i){
     return shuffleArr[numberArr[0]]
 }
 
-function isTrueAnswer(){
-
+function isTrueAnswer(nameTitle, linkImg){    
+    console.log(nameTitle, linkImg)
     if(objectAnswer.guess == objectAnswer.answer){
         taskBirdsNamesMarkers.forEach(el =>{
             if(el.firstElementChild.innerText == objectAnswer.answer){
                 el.classList.add('trueAnswer')
+                
+                document.querySelector('.task-block h2').textContent = nameTitle
+                document.querySelector('.task-block img').src = linkImg
+                
             }
-        })
-
+        })       
+        
     } else{
         taskBirdsNamesMarkers.forEach(el =>{
             if(el.firstElementChild.innerText == objectAnswer.answer){
                 el.classList.add('falseAnswer')
             }
         })
-    }
+    }   
 }
 // убираем цвет а маркерах
 function checkMarkerClass(){
-    console.log('!')
+    
     taskBirdsNamesMarkers.forEach(el =>{
-        console.log(el.classList)
+        
         if(el.classList.contains('trueAnswer')){
             el.classList.remove('trueAnswer')
         }
@@ -247,4 +252,16 @@ function checkMarkerClass(){
             el.classList.remove('falseAnswer')
         }
     })
+}
+
+// обнуляем блок птицы, которую загадали
+
+function removeTrueAnswer(){
+    if(document.querySelector('.task-block h2').textContent !== 'nameBird'){
+        document.querySelector('.task-block h2').textContent = 'nameBird'
+    }
+
+    if(document.querySelector('.task-block img').src !== './assets/svg/logo.svg'){
+        document.querySelector('.task-block img').src = './assets/svg/logo.svg'
+    }
 }
