@@ -214,4 +214,16 @@ main{
 }
 
 /* ----------------------------- */
+.page-3{
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-3 h2,
+.page-3 p{
+  font-size: 84px;
+}
 
