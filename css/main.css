@@ -234,14 +234,48 @@ main{
   }
 }
 
-@media (max-width: 600px){
-  .page-1 h1,
-  .page-3 h2,
-  .page-3 p{
-    font-size: 24px;
+
+  @media (max-width: 781px){
+    .task-block{
+      grid-template-columns: 1fr 1.5fr 0.5fr;
+      grid-template-rows: 0.5fr 0.5fr;
+      height: fit-content;
+    }
+
+    .foto-bird{
+      grid-column: 1 / 2;
+      grid-row: 1 / 3
+    }
+
+    .name-bird{
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+    }
+
+    .audio{
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+      height: 40px;
+    }
+    .describe-bird .audio{
+      height: 40px;
+    }
+    .page-1 h1,
+    .page-3 h2{
+      font-size: 48px;
+    }
+    .page-3 p{
+      font-size: 24px;
+    }
   }
-  .page-3 p{
-    font-size: 18px;
-  }
+
+  @media (max-width: 600px){
+    .page-1 h1,
+    .page-3 h2{
+      font-size: 24px;
+    }
+    .page-3 p{
+      font-size: 16px;
+    }
 
 }
