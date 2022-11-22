@@ -146,7 +146,7 @@ main{
   width: 80%;
   height: 100%;
   grid-column: 2 / 5;
-  grid-row: 3 / 4;
+  grid-row: 3 / 5;
   align-self: center;
   justify-self: self-start;
   margin-left: 5%;
@@ -228,54 +228,101 @@ main{
 }
 
 /* --------media-------------- */
-@media (max-width: 781px){
-  .page-1 h1{
-    font-size: 48px;
+/* --------media-------------- */
+@media (max-width: 960px){
+  .page-2{
+    row-gap: 0.5%;
   }
+  h2,
+  .describe-bird h2{
+    font-size: 1rem;
+  }
+  .describe-bird p,
+  .answer li{
+    font-size: 0.9rem;
+  }
+
+  .describe-bird{
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 0.5fr);
+  }
+
+  .describe-bird h2{
+    grid-column: 2 / 4;
+  }
+
+  .describe-bird .foto-bird{
+    grid-column: 1 / 2 ;
+    grid-row: 1 / 4;
+    align-self: center;
+  }
+
+  .page-2_nav{
+    gap: 1%;
+  }
+  .describe-bird .audio,
+  .task-block .audio{
+    width: 95%;
+    height: 40px;
+  }
+
 }
 
 
-  @media (max-width: 781px){
-    .task-block{
-      grid-template-columns: 1fr 1.5fr 0.5fr;
-      grid-template-rows: 0.5fr 0.5fr;
-      height: fit-content;
-    }
+@media (max-width: 781px){
 
-    .foto-bird{
-      grid-column: 1 / 2;
-      grid-row: 1 / 3
-    }
-
-    .name-bird{
-      grid-column: 2 / 3;
-      grid-row: 1 / 2;
-    }
-
-    .audio{
-      grid-column: 2 / 3;
-      grid-row: 2 / 3;
-      height: 40px;
-    }
-    .describe-bird .audio{
-      height: 40px;
-    }
-    .page-1 h1,
-    .page-3 h2{
-      font-size: 48px;
-    }
-    .page-3 p{
-      font-size: 24px;
-    }
+  .describe-bird p,
+  .answer li,
+  .page-2_nav li{
+    font-size: 0.7rem;
+  }
+  .task-block{
+    grid-template-columns: 1fr 1.5fr 0.2fr;
+    grid-template-rows: 0.5fr 0.5fr;
+    height: fit-content;
   }
 
-  @media (max-width: 600px){
-    .page-1 h1,
-    .page-3 h2{
-      font-size: 24px;
-    }
-    .page-3 p{
-      font-size: 16px;
-    }
+  .foto-bird{
+    grid-column: 1 / 2;
+    grid-row: 1 / 3
+  }
+
+  .name-bird{
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  .audio{
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
+
+  .page-1 h1,
+  .page-3 h2{
+    font-size: 48px;
+  }
+  .page-3 p{
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 600px){
+  .page-1 h1,
+  .page-3 h2{
+    font-size: 24px;
+  }
+
+  .page-3 p{
+    font-size: 16px;
+  }
+
+  .describe-bird .foto-bird{
+    grid-row: 1 / 2;
+  }
+  .describe-bird p,
+  .describe-bird .audio{
+    grid-column: 1 / 4;
+  }
+
 
 }
