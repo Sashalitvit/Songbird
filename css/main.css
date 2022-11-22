@@ -227,3 +227,21 @@ main{
   font-size: 84px;
 }
 
+/* --------media-------------- */
+@media (max-width: 781px){
+  .page-1 h1{
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 600px){
+  .page-1 h1,
+  .page-3 h2,
+  .page-3 p{
+    font-size: 24px;
+  }
+  .page-3 p{
+    font-size: 18px;
+  }
+
+}

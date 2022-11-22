@@ -20,8 +20,9 @@ objectAnswer = {
     answer:''
 }
 
-preloadImg()
+console.dir(document.querySelectorAll('.page-2_nav li'))
 
+preloadImg()
 
 // 1.header
 
@@ -29,35 +30,53 @@ preloadImg()
 score.classList.toggle('invisible')
 scoreRes.classList.toggle('invisible')
 
-headerBtn.addEventListener('click', ()=>{
+headerBtn.addEventListener('click', ()=>{    
+    
+    if(!mainScreen.classList.contains('view-3')){
 
-    selectName()
-    mainScreen.classList.toggle('view-2')
+        selectName()
+        mainScreen.classList.toggle('view-2')
 
-    if(mainScreen.classList.contains('view-2')){
+        if(mainScreen.classList.contains('view-2')){
 
-        headerBtnName.innerHTML = 'return'
-        score.classList.toggle('invisible')
-        scoreRes.classList.toggle('invisible')
+            headerBtnName.innerHTML = 'return'
+            score.classList.toggle('invisible')
+            scoreRes.classList.toggle('invisible')
+            
+            if (soundBtn.classList.contains('sound-btn_active')){
+            
+                video.muted = true            
+                soundBtn.classList.toggle('sound-btn_active')
+                soundBtn.classList.toggle('sound-btn_stop')
+            }
+        } else{
 
-        if (soundBtn.classList.contains('sound-btn_active')){
+            headerBtnName.innerHTML = 'play'
+            score.classList.toggle('invisible')
+            scoreRes.classList.toggle('invisible')
 
-            video.muted = true
-            soundBtn.classList.toggle('sound-btn_active')
-            soundBtn.classList.toggle('sound-btn_stop')
+            video.muted = false
+            soundBtn.classList.toggle('sound-btn_stop')          
+            soundBtn.classList.toggle('sound-btn_active')      
+
+            
         }
-    } else{
-        headerBtnName.innerHTML = 'play'
-        score.classList.toggle('invisible')
-        scoreRes.classList.toggle('invisible')
 
-        video.muted = false
-        soundBtn.classList.toggle('sound-btn_stop')
-        soundBtn.classList.toggle('sound-btn_active')
+    } else {
+        mainScreen.classList.toggle('view-3')
+        headerBtnName.innerHTML = 'return'
+        indexBirdsData = 1
 
+        removeTrueAnswer()
+        removeDescribeAnswer()
+        checkMarkerClass()
+        selectName(indexBirdsData)
+
+        scoreRes.textContent = 0
 
     }
 
+    
 })
 
 // main
@@ -67,9 +86,7 @@ soundBtn.classList.toggle('sound-btn_stop')
 soundBtn.addEventListener('click', ()=>{
 
     soundBtn.classList.toggle('sound-btn_stop')
-    soundBtn.classList.toggle('sound-btn_active')
-
-    toggleScreen()
+    soundBtn.classList.toggle('sound-btn_active')    
 
     if (soundBtn.classList.contains('sound-btn_active')){
         video.muted = false
@@ -81,8 +98,8 @@ soundBtn.addEventListener('click', ()=>{
 // 2.2 write names of birds
 
     // получаем название группы птиц по кнопке
-taskSelection.addEventListener('click', (event)=>{
-
+taskSelection.addEventListener('click', (event)=>{ 
+        
         switch(event.target.textContent){
             case 'Разминка':
                 indexBirdsData = 0
@@ -102,9 +119,9 @@ taskSelection.addEventListener('click', (event)=>{
             case 'Морские птицы':
                 indexBirdsData = 5
                 break
-            default:
+            default:                
                 return
-        }
+        }    
         selectName(indexBirdsData)
         checkMarkerClass()
 })
@@ -114,7 +131,7 @@ taskSelection.addEventListener('click', (event)=>{
 
 // block answer
     // по кнопке в меню, выводим название птиц вблоке задание
-function selectName(index = 0){
+function selectName(index = 0){        
         birdsData[index].forEach((el, i)=>{
             taskBirdsNames[i].textContent = el.name
         })
@@ -124,12 +141,25 @@ function selectName(index = 0){
         removeTrueAnswer()
         removeDescribeAnswer()
         guessBird(indexBirdsData)
+
+        // decorateNavBtn()
 }
+// стилизуем кнопку выбранной категории птиц
+// function decorateNavBtn(){
+
+//     document.querySelectorAll('.page-2_nav li').forEach(el =>{
+//         if(el.classList.contains('active-li')){
+//             el.classList.remove('active-li')
+//         }
+//     })
+
+//     document.querySelectorAll('.page-2_nav li')[indexBirdsData].classList.add('active-li')
+// }
 
 taskBirdsNames.forEach(el =>{
-
+    
     el.addEventListener('click',(event)=>{
-
+        
         nameBird = event.target.textContent
 
         birdsData[indexBirdsData].forEach((el, i) =>{
@@ -138,17 +168,17 @@ taskBirdsNames.forEach(el =>{
                 const index = i
                 descriptionBird(index)
             }
-
+            
         })
-    })
+    })    
 })
 
 // block description
 function descriptionBird(i){
 
     const describeName = document.querySelector('.describe-bird h2')
-    describeName.textContent = `${birdsData[indexBirdsData][i].name}` + '/' + `${birdsData[indexBirdsData][i].species}`
-
+    describeName.textContent = `${birdsData[indexBirdsData][i].name}` + '/' + `${birdsData[indexBirdsData][i].species}`   
+    
     const describeImg = document.querySelector('.describe-bird img')
 
     if(`${birdsData[indexBirdsData][i].name}` === 'Пеликан'){
@@ -157,7 +187,7 @@ function descriptionBird(i){
         describeImg.src = `${birdsData[indexBirdsData][i].image}`
     }
 
-    const describeText = document.querySelector('.describe-bird p')
+    const describeText = document.querySelector('.describe-bird p')    
     describeText.textContent = `${birdsData[indexBirdsData][i].description}`
 
     const describeAudio = document.querySelector('.describe-bird audio')
@@ -205,7 +235,6 @@ function preloadImg(){
 function guessBird(i){
     const guessBird = randomBirds(i) // получили птицу, которую нужно загадать
     console.log(guessBird)
-
     const taskAudio = document.querySelector('.task-block audio')
     taskAudio.src = `${guessBird.audio}`
 
@@ -221,44 +250,53 @@ function randomBirds(i){
     return shuffleArr[numberArr[0]]
 }
 
-// проверка ответа, если правильно выводим название фото
-function isTrueAnswer(nameTitle, linkImg){
-
+// проверка ответа, если правильно выводим название и фото
+function isTrueAnswer(nameTitle, linkImg){    
+    
     if(flagCross){
         return
     }
 
+    
     if(objectAnswer.guess == objectAnswer.answer){
-
+        
         taskBirdsNamesMarkers.forEach(el =>{
-            if(el.firstElementChild.innerText == objectAnswer.answer){
-                el.classList.add('trueAnswer')
-                document.querySelector('.task-block h2').textContent = nameTitle
-                document.querySelector('.task-block img').src = linkImg
 
-                fixScore()
-                isWin()
+            if(el.classList.contains('trueAnswer')){     //от повторного нажатия
+                return
+            }
+            
+            if(el.firstElementChild.innerText == objectAnswer.answer){
+                el.classList.add('trueAnswer')               
+                document.querySelector('.task-block h2').textContent = nameTitle
+                document.querySelector('.task-block img').src = linkImg                
+                
+                fixScore()  
+                isWin()              
             }
             return
-        })
-
+        })       
+        
     } else{
         taskBirdsNamesMarkers.forEach(el =>{
+
+            if(el.classList.contains('falseAnswer')){           //от повторного нажатия
+                return
+            }
+
             if(el.firstElementChild.innerText == objectAnswer.answer){
                 el.classList.add('falseAnswer')
-                console.log('?')
+                
                 checkPoint--
             }
         })
-    }
-
-    console.log(checkPoint)
+    }   
 }
 // убираем цвет а маркерах
 function checkMarkerClass(){
-
+    
     taskBirdsNamesMarkers.forEach(el =>{
-
+        
         if(el.classList.contains('trueAnswer')){
             el.classList.remove('trueAnswer')
         }
@@ -271,7 +309,7 @@ function checkMarkerClass(){
 // обнуляем блок птицы, которую загадали
 
 function removeTrueAnswer(){
-
+    
     document.querySelector('.task-block h2').textContent = '******'
     document.querySelector('.task-block img').src = './assets/svg/logo.svg'
 }
@@ -295,7 +333,7 @@ function nextLevel(){
 
     indexBirdsData++
     flagCross = false
-
+    
     removeTrueAnswer()
     removeDescribeAnswer()
     checkMarkerClass()
@@ -309,10 +347,10 @@ function fixScore(){
     if(indexBirdsData){
         let resNumber = Number(scoreRes.textContent)
         resNumber += (checkPoint >= 0) ? checkPoint : 0;
-        scoreRes.textContent = resNumber
+        scoreRes.textContent = resNumber  
     }
 
-    checkPoint = 5
+    checkPoint = 5  
     flagCross = true
 }
 
@@ -323,33 +361,43 @@ function isWin(){
     }
 }
 // вывод поздравления
-function winPage(){
-
-    console.log(Number(scoreRes.textContent))
+function winPage(){    
 
     let congratulation
-
-    if(Number(scoreRes.textContent) == 30){
+    
+    if(Number(scoreRes.textContent) == 25){
         congratulation = 'Excellent !'
     }
 
-    if(Number(scoreRes.textContent) < 30 && Number(scoreRes.textContent) > 25){
-        congratulation = 'Very Good !'
-    }
-
     if(Number(scoreRes.textContent) < 25 && Number(scoreRes.textContent) >= 20){
+        congratulation = 'Very Good !'
+    } 
+     
+    if(Number(scoreRes.textContent) < 20 && Number(scoreRes.textContent) >= 15){
         congratulation = 'Good Result !'
     }
-
-    if(Number(scoreRes.textContent) < 20){
+    
+    if(Number(scoreRes.textContent) < 15){
         congratulation = 'Try again, I belive in you !'
     }
 
-    document.querySelector('.page-3 h2').textContent = `Your score : ${scoreRes.textContent}`
+    document.querySelector('.page-3 h2').textContent = `Your score : ${scoreRes.textContent}` 
     document.querySelector('.page-3 p').textContent = congratulation
 
-    setTimeout(()=>{
-        mainScreen.classList.add('view-3')
-    }, 2000)
+    
 
+    setTimeout(()=>{
+        stopSound()
+        mainScreen.classList.toggle('view-3')   
+        headerBtnName.innerHTML = 'play again'     
+    }, 2000)
+    
+}
+
+function stopSound(){
+    const audioPlayers = document.querySelectorAll('audio')
+
+    audioPlayers.forEach(el =>{
+        el.src = ''
+    })
 }
